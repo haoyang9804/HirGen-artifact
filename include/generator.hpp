@@ -232,7 +232,7 @@ void uopGenerator::generateUnary_emptyPool(const DATATYPE& datatype, const OPTYP
           ? generateUopNode(_rvType(uoptype, datatype), uoptype, vcnd->shape_())
           : generateUopNode(_rvType(uoptype, datatype), uoptype, reshape(vcnd->shape_()));
   if (Coverage::noProgress(uoptype, datatype, uopnd->shape_()))
-    if (Custom::coverage) return;
+    if (Custom::coverage && rand() % 3 == 0) return;
   VarConstUpdate(vcnd);
   updateUopNode(vcnd, uopnd, uoptype, datatype);
 }
@@ -245,9 +245,9 @@ void uopGenerator::generateUnary_nonemptyPool(const DATATYPE& datatype, const OP
           : generateUopNode(_rvType(uoptype, datatype), uoptype, reshape(vcnd->shape_()));
   if (vcnd->isUop() || vcnd->isBop()) {
     if (Coverage::noProgress(uoptype, datatype, uopnd->shape_(), vcnd->optype_()))
-      if (Custom::coverage) return;
+      if (Custom::coverage && rand() % 3 == 0) return;
   } else if (Coverage::noProgress(uoptype, datatype, uopnd->shape_()))
-    if (Custom::coverage) return;
+    if (Custom::coverage && rand() % 3 == 0) return;
   OutputNode::erase(vcnd);
   updateUopNode(vcnd, uopnd, uoptype, datatype);
 }
@@ -315,7 +315,7 @@ void bopGenerator::generateBinary_emptyPool(const DATATYPE& datatype, const OPTY
   SHAPE newshape = Constraint::BroadcastRel_check(lhs->shape_(), rhs->shape_()).first;
   NODE_PTR bopnd = generateBopNode(_rvType(boptype, datatype), boptype, newshape);
   if (Coverage::noProgress(boptype, datatype, bopnd->shape_()))
-    if (Custom::coverage) return;
+    if (Custom::coverage && rand() % 3 == 0) return;
   VarConstUpdate(lhs);
   VarConstUpdate(rhs);
   updateBopNode(lhs, rhs, bopnd, boptype, datatype);
@@ -391,7 +391,7 @@ void bopGenerator::generateBinary_nonemptyPool(const DATATYPE& datatype, const O
     noprogress = Coverage::noProgress(boptype, datatype, bopnd->shape_());
   }
   if (noprogress)
-    if (Custom::coverage) return;
+    if (Custom::coverage && rand() % 3 == 0) return;
 
   // update
 

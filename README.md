@@ -1,25 +1,60 @@
-# HirGen
+# README of HirGen-artifact 
 
 **HirGen** is an effective fuzzer for Deep Learning compilers. Specifically, it focuses on the high-level optimization stage.
 
-Now HirGen can support 58 operators, including
+## Getting Started
 
-+ binary operators: Add, Subtract, Multiply, Divide, Power, Mod,
-Floor Mod, Floor Divide, Logical And, Logical Or, Logical
-Xor, Bitwise And, Bitwise Or, Equal, Not Equal, Less, LessEqual,
-Greater, GreaterEqual, Maximum, Minimum, Right Shift, Left
-Shift.
-+ unary operators: Log, Log2, Log10, Tan, Tanh, Cos, Cosh, Sin,
-Sinh, Acos, Acosh, Asin, Asinh, Atan, Atanh, Exp, Erf, Sqrt,
-Rsqrt, Sigmoid, Floor, Ceil, Trunc, Round, Abs, Sign,
-Negative, Logical not, Bitwise not, Zeros Like, Ones Like,
-Copy, isNan, isFinite, isInf.
+The following step-by-step instructions are used to create a suitable environment for building HirGen on Linux OS (take Ubuntu as example).
 
-Until now, **HirGen** has detected 21 bugs, of which 17 have been confirmed
-and 12 have been fixed. All these bugs lie in https://github.com/anonymousWork000/HirGen/tree/experiment
+1. Install GCC 
 
-To execute HirGen, first create a `build` folder, then `cmake .. -G Ninja` in `build`, finally `ninja`.
-You will find `hirgen` in `build`, and just run it with `./hirgen`. To assure cmake run successfully, please specify your Clang++/Clang path in `CMakeLists.txt`. If you prefer GCC/G++ and your default C/C++ compiler is GCC/G++, you can just delete the path specification of C/C++ compiler in `CMakeLists.txt`.
+    1) following this [link](https://gcc.gnu.org/install/) if you do not have root priviledges, or
+    2) following these two instructions if you have root privileges:
+    ```
+    sudo apt update
+    sudo apt install build-essential
+    ```
+    
+    or install LLVM 
+    1) following this [link](https://llvm.org/docs/GettingStarted.html) if you do not have root priviledges, or
+    2) following this instruction `sudo apt install clang` if you have root privileges.
+
+2. After installation, the absolute path of the `gcc`/`g++` command or `clang`/`clang++` command can be found by
+```
+which gcc
+which g++
+which clang
+which clang++
+```
+
+3. Now you have C++ compiler(s). And you also need to have `cmake`. You can either install it following this [line](https://cmake.org/install/) if you do not have root priviledges, or following the instruction `sudo apt install cmake`.
+
+The step-by-step instructions below are used to build the HirGen executable and execute it.
+
+1. Create a workspace for the executable
+```
+mkdir build
+```
+
+2. Create Makefile
+```
+cmake .. -G Ninja
+```
+In this step, you may fail because of not having C++ compiler. In this case, please refer to the step-by-step instructions for installing GCC or LLVM above.
+
+If you have multiple compilers or multiple version of a single compiler and you want to specify what compiler and which version you want to use, please add the first two statements above `set (CMAKE_CXX_STANDARD 17)` in `CMakeLists.txt`:
+```
+set(CMAKE_C_COMPILER {ABSOLUTE PATH OF YOUR C COMPILER})
+set(CMAKE_CXX_COMPILER {ABSOLUTE PATH OF YOUR C++ COMPILER})
+```
+Please substitute the `{ABSOLUTE PATH OF YOUR C/C++ COMPILER}` with the real absolute paths.
+
+3. Build
+```
+make
+```
+
+After these three instructions, you can find the `hirgen` executable in the `build` folder.
 
 `hirgen` provides several options for generating computational graphs.
   + `-num` specifies the number of operators, the default value is `-num=100`
@@ -27,5 +62,20 @@ You will find `hirgen` in `build`, and just run it with `./hirgen`. To assure cm
   + `-clevel` specifies the generation mode. Default option is `-clevel=strict`, meaning strict generation. You can switch it to disruptive generation by `-clevel=disruptive`.
   + -coverage` specifies whether we enable coverage guidance. The default option is `-coverage=yes`, you can switch it to `-coverage=no` to turn off guidance and make hirgen generate computational graph randomly.
 
-As for TVM, please refer to [here](https://tvm.apache.org/docs/install/from_source.html) to install it from source.
-After installing, you can `git checkout 124813f` to get the TVM version that can reproduce all our found bugs and then build TVM.
+To make things simple, you can direct execute it by 
+```
+./hirgen
+```
+And you will see `SUCCESS!` in the terminal if the generation succeeds. And now you can find `output.py` in the `build` folder. This is the python file that utilizes Relay's high-level APIs to create the corresponding high-level IR(s) of the generated computational graph. 
+
+To run this python file, you need to have python on your linux. One way of doing that is installing [Miniconda](https://docs.conda.io/en/latest/miniconda.html) or installing [Anaconda](https://docs.anaconda.com/free/anaconda/install/linux/).
+
+Besides, you need to have TVM installed
+folloing this [link](https://tvm.apache.org/docs/install/from_source.html) to install it from source.
+Our detected bugs could be reproduced using version `124813f` by `git checkout 124813f`. But since the 3rd party libraries are incompatible with this version, please just use the latest TVM, or use any version of TVM above 0.9 by `git checkout remotes/origin/{version}`. The {version} needs to be replaced by `v0.9.0`/`v0.10.0`, `v0.11.0`, or `v0.12.0`.
+
+Finally, you can use the instruction
+```
+python output.py 
+```
+to run the python code.
