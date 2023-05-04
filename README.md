@@ -1,8 +1,42 @@
 # README of HirGen-artifact 
 
+## Getting Started
+
 **HirGen** is an effective fuzzer for Deep Learning compilers. Specifically, it focuses on the high-level optimization stage.
 
-## Getting Started
+The general functionality of HirGen is generating computational graphs, converting them into high-level IRs and leverage the three test oracles to test DL compilers.
+The high-level IRs and the utilization of test oracles are shown in the generated `output.py`.
+
+1. Q: How to validate the success of generating the `output.py`?
+   
+   A: You can see `SUCCESS!` on the terminal such as:
+   ![](Figure/1.png)
+  
+2. Q: How to validate that `output.py` contains the high-level IR(s)?
+
+   A: Run `output.py` and you can see the IR on the terminal such as:
+   ![](Figure/2.png)
+
+3. Q: How to validate that `output.py` contains the utilization of the test oracles?
+
+   A: You can check the `output.py`. You will find
+
+   1) The mutation of the original IR into a semantically equivalent IR. (test oracle 2):
+   ![](Figure/3.png)
+   2) The use if high-level optimizations to translate the original IR into a semantically equivalent but optimized IR.
+   ![](Figure/4.png)
+   3) Execution of the IR on different platforms.
+   ![](Figure/5.png)
+
+4. Q: How to validate that HirGen can test TVM?
+   A: Run `output.py`. If a test fails, you will find that
+      1) TVM crashes with messages or throws segmentation fault, or
+      2) different outputs among different platforms are caught, or
+      3) semantically equivalent high-level IRs have different behaviors.
+         
+
+
+## Detailed Instructions
 
 The following step-by-step instructions are used to create a suitable environment for building HirGen on Linux OS (take Ubuntu as example).
 
@@ -72,7 +106,7 @@ To run this python file, you need to have python on your linux. One way of doing
 
 Besides, you need to have TVM installed
 folloing this [link](https://tvm.apache.org/docs/install/from_source.html) to install it from source.
-Our detected bugs could be reproduced using version `124813f` by `git checkout 124813f`. But since the 3rd party libraries are incompatible with this version, please just use the latest TVM, or use any version of TVM above 0.9 by `git checkout remotes/origin/{version}`. The {version} needs to be replaced by `v0.9.0`/`v0.10.0`, `v0.11.0`, or `v0.12.0`.
+Our detected bugs could be reproduced using version `124813f` by `git checkout 124813f`. But since the 3rd party libraries of TVM are incompatible with this version, please just use the latest TVM, or use any version of TVM above 0.9 by `git checkout remotes/origin/{version}`. The {version} needs to be replaced by `v0.9.0`/`v0.10.0`, `v0.11.0`, or `v0.12.0`.
 
 Finally, you can use the instruction
 ```
