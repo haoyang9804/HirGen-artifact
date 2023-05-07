@@ -87,6 +87,7 @@ Please substitute the `{ABSOLUTE PATH OF YOUR C/C++ COMPILER}` with the real abs
 ```
 make
 ```
+(Or, if you prefer ninja, you can do `cmake .. -G Ninja` in the second step and use `ninja` to build in this step)
 
 After these three instructions, you can find the `hirgen` executable in the `build` folder.
 
