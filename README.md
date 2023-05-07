@@ -97,6 +97,8 @@ After these three instructions, you can find the `hirgen` executable in the `bui
   + `-clevel` specifies the generation mode. Default option is `-clevel=strict`, meaning strict generation. You can switch it to disruptive generation by `-clevel=disruptive`.
   + -coverage` specifies whether we enable coverage guidance. The default option is `-coverage=yes`, you can switch it to `-coverage=no` to turn off guidance and make hirgen generate computational graph randomly.
 
+If your host or the server does not have CUDA env, please do not turn on the testing flag by `-testing=df` because the differential testing contain the use of CUDA.
+
 To make things simple, you can direct execute it by 
 ```
 ./hirgen
