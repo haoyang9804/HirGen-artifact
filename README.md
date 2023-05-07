@@ -50,7 +50,7 @@ The following step-by-step instructions are used to create a suitable environmen
     sudo apt install build-essential
     ```
     
-    or install LLVM 
+    or install Clang 
     1) following this [link](https://llvm.org/docs/GettingStarted.html) if you do not have root priviledges, or
     2) following this instruction `sudo apt install clang` if you have root privileges.
 
@@ -63,6 +63,8 @@ which clang++
 ```
 
 3. Now you have C++ compiler(s). And you also need to have `cmake`. You can either install it following this [line](https://cmake.org/install/) if you do not have root priviledges, or following the instruction `sudo apt install cmake`.
+
+4. Last, you need at least to install [LLVM](https://llvm.org/docs/GettingStarted.html) for TVM to generate executable codes.
 
 The step-by-step instructions below are used to build the HirGen executable and execute it.
 
