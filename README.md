@@ -10,6 +10,7 @@ The high-level IRs and the utilization of test oracles are shown in the generate
 1. Q: How to validate the success of generating the `output.py`?
    
    A: You can see `SUCCESS!` on the terminal such as:
+   
    ![](Figure/1.png)
   
 2. Q: How to validate that `output.py` contains the high-level IR(s)?
