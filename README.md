@@ -119,3 +119,7 @@ Finally, you can use the instruction
 python output.py 
 ```
 to run the python code.
+
+## Docker Image
+
+To make things simple, we have created a [docker image](https://hub.docker.com/repository/docker/mhypony/hirgen/general) to play with. After you create docker container from this image, you can simply type `hirgen` and you will find `output.py` in the current directory. You can then `Python3 output.py` to get the compilation results given by TVM.
