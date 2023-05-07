@@ -72,7 +72,7 @@ mkdir build
 
 2. Create Makefile
 ```
-cmake .. -G Ninja
+cmake ..
 ```
 In this step, you may fail because of not having C++ compiler. In this case, please refer to the step-by-step instructions for installing GCC or LLVM above.
 
